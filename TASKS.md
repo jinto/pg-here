@@ -67,9 +67,9 @@ InstanceManager: initdb → pg_ctl start → DB 생성 → 대기
 - [x] **T2.5** 시그널 핸들링 (SIGINT, SIGTERM → graceful shutdown)
 
 ### Phase 3: 데이터베이스 관리 (`database.py`)
-- [ ] **T3.1** 데이터베이스 존재 여부 확인 및 생성
-- [ ] **T3.2** pg_stat_statements 확장 설치
-- [ ] **T3.3** 연결 문자열 생성
+- [x] **T3.1** 데이터베이스 존재 여부 확인 및 생성
+- [x] **T3.2** pg_stat_statements 확장 설치
+- [x] **T3.3** 연결 문자열 생성
 
 ### Phase 4: CLI (`cli.py`)
 - [ ] **T4.1** Click 기반 CLI 구현 (--username, --password, --port, --database, --pg-version)

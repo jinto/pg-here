@@ -65,8 +65,37 @@ def _has_symlink_ancestor(path: Path, root: Path) -> bool:
     return False
 
 
+def _is_safe_symlink(member: tarfile.TarInfo, dest: Path) -> bool:
+    """Return True if a symlink member points to a safe target within dest."""
+    if not member.issym():
+        return False
+    # Validate the symlink's own path (where it will be created)
+    if member.name.startswith("/") or ".." in member.name.split("/"):
+        _log.debug("Skipping symlink with unsafe path: %s", member.name)
+        return False
+    link_path = dest / member.name
+    if not link_path.parent.resolve().is_relative_to(dest):
+        _log.debug("Skipping symlink outside dest: %s", member.name)
+        return False
+    # Validate the symlink target (where it points to)
+    link_target = member.linkname
+    if link_target.startswith("/"):
+        _log.debug("Skipping symlink with absolute target: %s -> %s", member.name, link_target)
+        return False
+    if ".." in link_target.split("/"):
+        _log.debug("Skipping symlink with traversal target: %s -> %s", member.name, link_target)
+        return False
+    resolved = (link_path.parent / link_target).resolve()
+    if not resolved.is_relative_to(dest):
+        _log.debug("Skipping symlink escaping dest: %s -> %s", member.name, link_target)
+        return False
+    return True
+
+
 def _is_safe_member(member: tarfile.TarInfo, dest: Path) -> bool:
     """Return True if a tar member is safe to extract into dest."""
+    if member.issym():
+        return _is_safe_symlink(member, dest)
     if not (member.isfile() or member.isdir()):
         _log.debug("Skipping non-regular entry: %s (type=%s)", member.name, member.type)
         return False

@@ -60,11 +60,11 @@ InstanceManager: initdb → pg_ctl start → DB 생성 → 대기
 - [x] **T1.3** jar(zip) 파일 추출 → pg_local/bin/{version}/ 에 설치
 - [x] **T1.4** 이미 설치된 버전 감지 (재다운로드 방지)
 ### Phase 2: 인스턴스 관리 (`instance.py`)
-- [ ] **T2.1** `initdb` 래퍼 (데이터 디렉토리 초기화)
-- [ ] **T2.2** `pg_ctl start` 래퍼 (인스턴스 시작)
-- [ ] **T2.3** `pg_ctl stop` 래퍼 (인스턴스 종료)
-- [ ] **T2.4** postgresql.conf 관리 (포트, shared_preload_libraries 등)
-- [ ] **T2.5** 시그널 핸들링 (SIGINT, SIGTERM → graceful shutdown)
+- [x] **T2.1** `initdb` 래퍼 (데이터 디렉토리 초기화)
+- [x] **T2.2** `pg_ctl start` 래퍼 (인스턴스 시작)
+- [x] **T2.3** `pg_ctl stop` 래퍼 (인스턴스 종료)
+- [x] **T2.4** postgresql.conf 관리 (포트, shared_preload_libraries 등)
+- [x] **T2.5** 시그널 핸들링 (SIGINT, SIGTERM → graceful shutdown)
 
 ### Phase 3: 데이터베이스 관리 (`database.py`)
 - [ ] **T3.1** 데이터베이스 존재 여부 확인 및 생성

@@ -55,12 +55,10 @@ InstanceManager: initdb → pg_ctl start → DB 생성 → 대기
 - [x] **T0.3** .gitignore 작성
 
 ### Phase 1: 바이너리 관리 (`binary.py`)
-- [ ] **T1.1** 플랫폼/아키텍처 감지 (darwin-arm64, darwin-amd64, linux-amd64 등)
-- [ ] **T1.2** Zonky Maven Central에서 PostgreSQL 바이너리 다운로드
-- [ ] **T1.3** jar(zip) 파일 추출 → pg_local/bin/{version}/ 에 설치
-- [ ] **T1.4** 이미 설치된 버전 감지 (재다운로드 방지)
-- [ ] **T1.5** 사용 가능한 버전 목록 조회 (Maven metadata.xml 파싱)
-
+- [x] **T1.1** 플랫폼/아키텍처 감지 (darwin-arm64, darwin-amd64, linux-amd64 등)
+- [x] **T1.2** Zonky Maven Central에서 PostgreSQL 바이너리 다운로드
+- [x] **T1.3** jar(zip) 파일 추출 → pg_local/bin/{version}/ 에 설치
+- [x] **T1.4** 이미 설치된 버전 감지 (재다운로드 방지)
 ### Phase 2: 인스턴스 관리 (`instance.py`)
 - [ ] **T2.1** `initdb` 래퍼 (데이터 디렉토리 초기화)
 - [ ] **T2.2** `pg_ctl start` 래퍼 (인스턴스 시작)

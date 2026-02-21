@@ -72,9 +72,9 @@ InstanceManager: initdb → pg_ctl start → DB 생성 → 대기
 - [x] **T3.3** 연결 문자열 생성
 
 ### Phase 4: CLI (`cli.py`)
-- [ ] **T4.1** Click 기반 CLI 구현 (--username, --password, --port, --database, --pg-version)
-- [ ] **T4.2** 시작 정보 출력 (연결 문자열, 버전, 포트 등)
-- [ ] **T4.3** 에러 처리 및 진단 메시지 (Linux libxml2 등)
+- [x] **T4.1** Click 기반 CLI 구현 (--username, --password, --port, --database, --pg-version)
+- [x] **T4.2** 시작 정보 출력 (연결 문자열, 버전, 포트 등)
+- [x] **T4.3** 에러 처리 및 진단 메시지 (Linux libxml2 등)
 
 ### Phase 5: Public API (`__init__.py`)
 - [ ] **T5.1** start_pg_here() / stop_pg_here() API
@@ -95,4 +95,4 @@ InstanceManager: initdb → pg_ctl start → DB 생성 → 대기
 | password | postgres |
 | port | 55432 |
 | database | postgres |
-| pg-version | auto (최신) |
+| pg-version | 17.4.0 (기본값, 이미 설치된 버전 우선) |

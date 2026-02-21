@@ -77,8 +77,8 @@ InstanceManager: initdb → pg_ctl start → DB 생성 → 대기
 - [x] **T4.3** 에러 처리 및 진단 메시지 (Linux libxml2 등)
 
 ### Phase 5: Public API (`__init__.py`)
-- [ ] **T5.1** start_pg_here() / stop_pg_here() API
-- [ ] **T5.2** PgHereHandle 데이터 클래스
+- [x] **T5.1** start_pg_here() / stop_pg_here() API
+- [x] **T5.2** PgHereHandle 데이터 클래스
 
 ### Phase 6: 테스트 및 마무리
 - [ ] **T6.1** 통합 테스트 (실제 PostgreSQL 시작/종료/DB 생성)

@@ -18,6 +18,22 @@ def get_data_dir(project_dir: Path) -> Path:
     return project_dir / "pg_local" / "data"
 
 
+def check_version_compat(data_dir: Path, version: str) -> None:
+    """Raise RuntimeError if existing data directory is incompatible with binary version."""
+    pg_version_file = data_dir / "PG_VERSION"
+    if not pg_version_file.is_file():
+        return
+    data_major = pg_version_file.read_text().strip()
+    binary_major = version.split(".")[0]
+    if data_major != binary_major:
+        raise RuntimeError(
+            f"pg_local/data/ was initialized with PostgreSQL {data_major}, "
+            f"but binary is version {binary_major}. "
+            f"Delete pg_local/data/ to reinitialize, "
+            f"or use a version matching major version {data_major}."
+        )
+
+
 def _find_binary(install_dir: Path, name: str) -> Path:
     binary = install_dir / "bin" / name
     if not binary.is_file():

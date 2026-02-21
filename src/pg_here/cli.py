@@ -24,24 +24,6 @@ def _progress_callback(downloaded: int, total: int | None) -> None:
         click.echo(f"\rDownloading PostgreSQL... {mb:.1f} MB", nl=False)
 
 
-def _check_version_compat(data_dir: Path, version: str) -> None:
-    """Check that data directory is compatible with the binary version."""
-    pg_version_file = data_dir / "PG_VERSION"
-    if not pg_version_file.is_file():
-        return
-    data_major = pg_version_file.read_text().strip()
-    binary_major = version.split(".")[0]
-    if data_major != binary_major:
-        click.echo(
-            f"Error: pg_local/data/ was initialized with PostgreSQL {data_major}, "
-            f"but binary is version {binary_major}.\n"
-            f"Delete pg_local/data/ to reinitialize, "
-            f"or use --pg-version matching major version {data_major}.",
-            err=True,
-        )
-        sys.exit(1)
-
-
 @click.command()
 @click.option("--username", "-u", default="postgres", help="PostgreSQL superuser name.")
 @click.option(
@@ -82,18 +64,13 @@ def main(
 
         # 3. Version compatibility check
         data_dir = instance.get_data_dir(project_dir)
-        _check_version_compat(data_dir, version)
+        try:
+            instance.check_version_compat(data_dir, version)
+        except RuntimeError as exc:
+            click.echo(f"Error: {exc}\nUse --pg-version to match the existing data directory.", err=True)
+            sys.exit(1)
 
-        # 4. Initialize cluster
-        is_new = instance.init_cluster(install_dir, data_dir, username)
-
-        # 5. Write postgresql.conf
-        instance.write_pg_conf(data_dir, {
-            "listen_addresses": "'localhost'",
-            "shared_preload_libraries": "'pg_stat_statements'",
-        })
-
-        # 6. Start PostgreSQL
+        # 4. Check if already running
         if instance.is_running(install_dir, data_dir):
             click.echo(
                 "Error: PostgreSQL is already running on this data directory.\n"
@@ -101,14 +78,30 @@ def main(
                 err=True,
             )
             sys.exit(1)
+
+        # 5. Initialize cluster
+        is_new = instance.init_cluster(install_dir, data_dir, username)
+
+        # 6. Write postgresql.conf
+        instance.write_pg_conf(data_dir, {
+            "listen_addresses": "'localhost'",
+            "shared_preload_libraries": "'pg_stat_statements'",
+        })
+
+        # 7. Start PostgreSQL
         instance.start(install_dir, data_dir, port)
 
-        # 7. Create database
-        if dbname != "postgres":
-            database.ensure_database("localhost", port, username, dbname)
-
-        # 8. Install pg_stat_statements
-        database.ensure_pg_stat_statements("localhost", port, username, dbname)
+        # 8. Create database and install extensions
+        try:
+            if dbname != "postgres":
+                database.ensure_database("localhost", port, username, dbname)
+            database.ensure_pg_stat_statements("localhost", port, username, dbname)
+        except Exception:
+            try:
+                instance.stop(install_dir, data_dir)
+            except Exception:
+                pass
+            raise
 
         # 9. Print startup info
         conn_str = database.connection_string("localhost", port, username, password, dbname)

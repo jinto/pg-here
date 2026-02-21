@@ -109,6 +109,19 @@ conn = psycopg.connect("postgresql://postgres:postgres@localhost:55432/myapp")
 psql postgresql://postgres:postgres@localhost:55432/myapp
 ```
 
+### Python API
+
+Use pg-here as a library in tests or scripts:
+
+```python
+from pg_here import start_pg_here
+
+handle = start_pg_here(port=55432, database="myapp")
+print(handle.connection_string)
+# ... use PostgreSQL ...
+handle.stop()
+```
+
 ## How it works
 
 1. Downloads pre-built PostgreSQL binaries from [Zonky embedded-postgres-binaries](https://github.com/zonkyio/embedded-postgres-binaries) (Maven Central)

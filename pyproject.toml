@@ -17,5 +17,8 @@ dependencies = [
 [project.scripts]
 pg-here = "pg_here.cli:main"
 
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/pg_here"]

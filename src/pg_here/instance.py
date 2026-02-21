@@ -112,6 +112,17 @@ def write_pg_conf(data_dir: Path, settings: dict[str, str]) -> None:
     _log.debug("Wrote pg-here settings to %s", conf_path)
 
 
+def _read_log_tail(log_file: Path, lines: int = 5) -> str:
+    """Return the last *lines* from a log file, or empty string if unreadable."""
+    if lines <= 0 or not log_file.is_file():
+        return ""
+    try:
+        tail = log_file.read_text(errors="replace").strip().splitlines()[-lines:]
+    except OSError:
+        return ""
+    return "\n".join(tail)
+
+
 def start(
     install_dir: Path,
     data_dir: Path,
@@ -124,17 +135,27 @@ def start(
         return
 
     pg_ctl = _find_binary(install_dir, "pg_ctl")
-    _run(
+    log_file = data_dir / "pg.log"
+    result = _run(
         [
             str(pg_ctl),
             "start",
             "-D", str(data_dir),
-            "-l", str(data_dir / "pg.log"),
+            "-l", str(log_file),
             "-w",
             "-o", f"-p {port}",
         ],
         env=env,
+        check=False,
     )
+    if result.returncode != 0:
+        detail = result.stderr.strip()
+        log_tail = _read_log_tail(log_file)
+        if log_tail:
+            detail += "\n" + log_tail
+        raise RuntimeError(
+            f"pg_ctl failed (exit {result.returncode}): {detail}"
+        )
     _log.info("PostgreSQL started on port %d", port)
 
 

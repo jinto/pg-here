@@ -81,9 +81,9 @@ InstanceManager: initdb → pg_ctl start → DB 생성 → 대기
 - [x] **T5.2** PgHereHandle 데이터 클래스
 
 ### Phase 6: 테스트 및 마무리
-- [ ] **T6.1** 통합 테스트 (실제 PostgreSQL 시작/종료/DB 생성)
-- [ ] **T6.2** README.md 작성
-- [ ] **T6.3** 로컬에서 `uvx` 테스트 (uv tool install --editable .)
+- [x] **T6.1** 통합 테스트 (실제 PostgreSQL 시작/종료/DB 생성)
+- [x] **T6.2** README.md 작성
+- [x] **T6.3** 로컬에서 `uvx` 테스트 (uv tool install --editable .)
 
 ---
 

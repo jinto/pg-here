@@ -6,13 +6,33 @@ build-backend = "hatchling.build"
 name = "pg-here"
 version = "0.1.0"
 description = "Run a local PostgreSQL instance in your project folder with one command"
+readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
+authors = [{name = "jinto"}]
+keywords = ["postgresql", "postgres", "database", "local", "development"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Database",
+    "Topic :: Software Development :: Testing",
+]
 dependencies = [
     "click>=8.0",
     "httpx>=0.27",
     "psycopg[binary]>=3.1",
 ]
+
+[project.urls]
+Homepage = "https://github.com/jinto/pg-here"
+Repository = "https://github.com/jinto/pg-here"
+Issues = "https://github.com/jinto/pg-here/issues"
 
 [project.scripts]
 pg-here = "pg_here.cli:main"

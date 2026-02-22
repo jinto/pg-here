@@ -16,6 +16,8 @@ That's it. No Docker, no Homebrew, no system-wide installation. PostgreSQL runs 
 > **Python port** of [pg-here](https://github.com/mayfer/pg-here) (Node.js) by [@mayfer](https://github.com/mayfer).
 > Same concept, independent implementation — rewritten from scratch in Python for the `uv`/`uvx` ecosystem.
 
+[한국어 README](README.ko.md)
+
 ## Why?
 
 Setting up PostgreSQL for local development is annoying:

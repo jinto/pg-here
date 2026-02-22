@@ -1,8 +1,11 @@
 # pg-here
 
 [![PyPI](https://img.shields.io/pypi/v/pg-here)](https://pypi.org/project/pg-here/)
+[![Downloads](https://img.shields.io/pypi/dm/pg-here)](https://pypi.org/project/pg-here/)
 [![CI](https://github.com/jinto/pg-here/actions/workflows/python-package.yml/badge.svg)](https://github.com/jinto/pg-here/actions/workflows/python-package.yml)
 [![Python 3.10+](https://img.shields.io/pypi/pyversions/pg-here)](https://pypi.org/project/pg-here/)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 명령어 하나로 프로젝트 폴더에 로컬 PostgreSQL을 실행하세요.

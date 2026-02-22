@@ -1,5 +1,10 @@
 # pg-here
 
+[![PyPI](https://img.shields.io/pypi/v/pg-here)](https://pypi.org/project/pg-here/)
+[![CI](https://github.com/jinto/pg-here/actions/workflows/python-package.yml/badge.svg)](https://github.com/jinto/pg-here/actions/workflows/python-package.yml)
+[![Python 3.10+](https://img.shields.io/pypi/pyversions/pg-here)](https://pypi.org/project/pg-here/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Run a local PostgreSQL instance in your project folder with one command.
 
 ```bash
